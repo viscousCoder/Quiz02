@@ -6,6 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Game</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .correct {
+            color: green;
+            font-weight: bold;
+            /* Optional: make correct answers stand out */
+        }
+
+        .incorrect {
+            color: red;
+            font-weight: bold;
+            /* Optional: make incorrect answers stand out */
+        }
+    </style>
 </head>
 
 <body>
@@ -85,19 +98,14 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="tableBodyData">
                     <!-- Table rows will be generated dynamically -->
                 </tbody>
             </table>
             <button onclick="goBackToMainPage()">Back to Main</button>
         </div>
 
-        <!-- <div id="modal" class="hidden">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <div id="modal-body"></div>
-            </div>
-        </div> -->
+
 
         <div id="modal" class="hidden">
             <div class="modal-content">

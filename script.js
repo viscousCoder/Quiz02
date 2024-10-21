@@ -83,39 +83,6 @@ document.getElementById("reg-email").addEventListener("input", (e) => {
 });
 
 //handle debounce
-/*
-function debounceFunction(args) {
-  console.log("hii", args);
-  const input = args.target;
-  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,3}$/.test(input.value); // Check if the input contains only numbers
-
-  if (!isValid) {
-    showError(input, "Invalid email format");
-    input.classList.add("input-error");
-  } else {
-    const errorMessage = input.nextElementSibling;
-    if (errorMessage && errorMessage.classList.contains("error-message")) {
-      errorMessage.remove();
-      input.classList.remove("input-error");
-    }
-  }
-}
-const updateDebounceError = debounce(debounceFunction, 300);
-
-function debounce(cl, delay) {
-  let timer;
-  return function (...args) {
-    let context = this;
-
-    console.log(context, "hum");
-
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      cl.apply(context, args);
-    }, delay);
-  };
-}
-  */
 
 // Show error message below input field
 function showError(input, message) {
@@ -444,76 +411,6 @@ function formatTime(seconds) {
   return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
 }
 
-// function submitQuiz() {
-//   clearInterval(timer);
-//   let correct = 0;
-//   questions.forEach((q, index) => {
-//     if (quizAnswers[index] === q.answer) {
-//       correct++;
-//     }
-//   });
-//   console.log(quizAnswers, "this");
-//   const score = (correct / questions.length) * 100;
-//   currentUser.scores.push(score);
-//   localStorage.setItem("users", JSON.stringify(users));
-//   showResult(score, correct, questions.length - correct);
-
-//   setTimeout(() => {
-//     document.getElementById("quiz-section").classList.add("hidden");
-//     document.getElementById("home-section").classList.remove("hidden");
-//   }, 3000);
-// }
-
-// function submitQuiz() {
-//   clearInterval(timer);
-//   let correct = 0;
-
-//   // Calculate the number of correct answers
-//   questions.forEach((q, index) => {
-//     if (quizAnswers[index] === q.answer) {
-//       correct++;
-//     }
-//   });
-
-//   // Calculate the score as a percentage
-//   const score = (correct / questions.length) * 100;
-//   currentUser.scores.push(score);
-
-//   // Get the current date and time
-//   let currentDate = new Date();
-//   let submissionTime = currentDate.toLocaleTimeString(); // e.g., "10:30:15 AM"
-//   let submissionDate = currentDate.toLocaleDateString(); // e.g., "10/20/2024"
-//   let submissionDay = currentDate.toLocaleString("en-us", { weekday: "long" }); // e.g., "Sunday"
-
-//   // Create an object to store the quiz result details
-//   let quizResult = {
-//     score: score,
-//     correctAnswers: correct,
-//     incorrectAnswers: questions.length - correct,
-//     submissionDate: submissionDate,
-//     submissionTime: submissionTime,
-//     submissionDay: submissionDay,
-//   };
-
-//   // Store the updated quiz results in the user's data
-//   if (!currentUser.quizResults) {
-//     currentUser.quizResults = [];
-//   }
-//   currentUser.quizResults.push(quizResult);
-
-//   // Update the local storage with the new user data
-//   localStorage.setItem("users", JSON.stringify(users));
-
-//   // Display the result to the user
-//   showResult(score, correct, questions.length - correct);
-
-//   // Switch from the quiz section to the home section after a short delay
-//   setTimeout(() => {
-//     document.getElementById("quiz-section").classList.add("hidden");
-//     document.getElementById("home-section").classList.remove("hidden");
-//   }, 3000);
-// }
-
 function submitQuiz() {
   clearInterval(timer);
   let correct = 0;
@@ -541,7 +438,8 @@ function submitQuiz() {
   });
 
   // Calculate the score as a percentage
-  const score = (correct / questions.length) * 100;
+  //   const score = (correct / questions.length) * 100;
+  const score = correct;
   currentUser.scores.push(score);
 
   // Get the current date and time
@@ -630,18 +528,6 @@ function showResult(score, correct, wrong) {
   document.getElementById("modal").classList.remove("hidden");
 }
 
-// function showSummary() {
-//   if (!currentUser.scores.length) {
-//     alert("Please play the quiz first.");
-//     return;
-//   }
-//   const highest = Math.max(...currentUser.scores);
-//   const modalBody = document.getElementById("modal-body");
-//   modalBody.innerHTML = `<p>Highest Score: ${highest}%</p>
-//         <p>Attempts: ${currentUser.scores.length}</p>`;
-//   document.getElementById("modal").classList.remove("hidden");
-// }
-
 function showAllSummary() {
   const modalBody = document.getElementById("modal-body");
   modalBody.innerHTML =
@@ -712,183 +598,7 @@ setInterval(updateTimer, 1000);
 // Initialize timer on page load
 updateTimer();
 
-//   //show summar
-//   // Function to show quiz summary
-//   function showSummary() {
-//     const summarySection = document.getElementById("summary-section");
-//     const quizSummaryTable = document
-//       .getElementById("quiz-summary-table")
-//       .querySelector("tbody");
-
-//     // Clear previous data in the table
-//     quizSummaryTable.innerHTML = "";
-
-//     // Fetch user data from local storage
-//     const users = JSON.parse(localStorage.getItem("users")) || [];
-
-//     // Populate the table with user data
-//     users.forEach((user) => {
-//       user.quizResults.forEach((result, index) => {
-//         const row = document.createElement("tr");
-//         row.innerHTML = `
-//           <td>${user.username}</td>
-//           <td>${user.email}</td>
-//           <td>${user.phone}</td>
-//           <td>${index + 1}</td>
-//           <td>${result.submissionDay}</td>
-//           <td>${result.submissionTime}</td>
-//           <td><button onclick="viewDetails(${user}, ${result})">View</button></td>
-//         `;
-//         quizSummaryTable.appendChild(row);
-//       });
-//     });
-
-//     // Hide the main page and show the summary section
-//     document.getElementById("home-section").classList.add("hidden");
-//     summarySection.classList.remove("hidden");
-//   }
-
-//   // Function to go back to the main page
-//   function goBackToMainPage() {
-//     document.getElementById("summary-section").classList.add("hidden");
-//     document.getElementById("home-section").classList.remove("hidden");
-//   }
-
-// Assuming `users` is the array containing user data from local storage
-// function displayQuizSummary() {
-//   const summarySection = document.getElementById("summary-section");
-//   const tbody = document.querySelector("#quiz-summary-table tbody");
-
-//   // Clear previous rows
-//   tbody.innerHTML = "";
-
-//   users.forEach((user) => {
-//     user.quizResults.forEach((result) => {
-//       const row = document.createElement("tr");
-//       row.innerHTML = `
-//                 <td>${user.username}</td>
-//                 <td>${user.email}</td>
-//                 <td>${user.phone}</td>
-//                 <td>${result.score}</td>
-//                 <td>${result.submissionDay}</td>
-//                 <td>${result.submissionTime}</td>
-//                 <td><button class="view-button" onclick="showModal(${user.quizResults.indexOf(
-//                   result
-//                 )})">View</button></td>
-//             `;
-//       tbody.appendChild(row);
-//     });
-//   });
-
-//   summarySection.classList.remove("hidden");
-// }
-
-// // Function to show the modal with detailed results
-// function showModal(index) {
-//   const modal = document.getElementById("modal");
-//   const modalBody = document.getElementById("modal-body");
-//   const user = users[currentUserIndex]; // Assuming currentUserIndex is defined
-//   const result = user.quizResults[index];
-
-//   let content = "<h3>Quiz Results</h3>";
-//   result.questionResults.forEach((q, i) => {
-//     content += `
-//             <div>
-//                 <strong>Question ${i + 1}:</strong> ${questions[i].question}<br>
-//                 <strong>Your Answer:</strong> <span style="color:${
-//                   q.isCorrect ? "green" : "red"
-//                 };">${questions[i].options[q.userAnswer]}</span><br>
-//                 <strong>Correct Answer:</strong> <span style="color:green;">${
-//                   questions[i].options[q.correctAnswer]
-//                 }</span>
-//             </div>
-//             <hr>
-//         `;
-//   });
-
-//   modalBody.innerHTML = content;
-//   modal.classList.remove("hidden");
-// }
-
-// // Function to close the modal
-// // function closeModal() {
-// //   const modal = document.getElementById("modal");
-// //   modal.classList.add("hidden");
-// // }
-
-// // Function to go back to the main page
-// function goBackToMainPage() {
-//   document.getElementById("summary-section").classList.add("hidden");
-//   // Logic to show the main page goes here
-// }
-
-// // Call this function to initially populate the summary table
-// displayQuizSummary();
-
-/////////////////////////////////////
-// function displayQuizSummary() {
-//   const users = JSON.parse(localStorage.getItem("users")) || [];
-//   const summaryTableBody = document.querySelector("#quiz-summary-table tbody");
-//   summaryTableBody.innerHTML = ""; // Clear existing rows
-
-//   users.forEach((user) => {
-//     user.quizResults.forEach((result) => {
-//       const row = document.createElement("tr");
-//       row.innerHTML = `
-//                 <td>${user.username}</td>
-//                 <td>${user.email}</td>
-//                 <td>${user.phone}</td>
-//                 <td>${result.score}</td>
-//                 <td>${result.submissionDay}</td>
-//                 <td>${result.submissionTime}</td>
-//                 <td><button class="view-button" onclick="showModal(${JSON.stringify(
-//                   result
-//                 )})">View</button></td>
-//             `;
-//       summaryTableBody.appendChild(row);
-//     });
-//   });
-
-//   document.getElementById("summary-section").classList.remove("hidden");
-// }
-
-// function showModal(result) {
-//   const modalBody = document.getElementById("modal-body");
-//   let content = `<h3>Quiz Results</h3>`;
-//   content += `<p>Score: ${result.score}</p>`;
-//   content += `<p>Correct Answers: ${result.correctAnswers}</p>`;
-//   content += `<p>Incorrect Answers: ${result.incorrectAnswers}</p>`;
-//   content += `<h4>Question Results</h4>`;
-//   content += `<ul>`;
-
-//   result.questionResults.forEach((questionResult, index) => {
-//     const question = questions[index]; // Assuming questions are in the same order
-//     content += `<li>${question.question}<br>`;
-//     content += `Your Answer: <span class="${
-//       questionResult.isCorrect ? "correct" : "incorrect"
-//     }">${question.options[questionResult.userAnswer]}</span><br>`;
-//     content += `Correct Answer: <span class="correct">${
-//       question.options[questionResult.correctAnswer]
-//     }</span></li>`;
-//   });
-
-//   content += `</ul>`;
-//   modalBody.innerHTML = content;
-//   document.getElementById("modal").classList.remove("hidden");
-// }
-
-// function closeModal() {
-//   document.getElementById("modal").classList.add("hidden");
-// }
-
-// function goBackToMainPage() {
-//   document.getElementById("summary-section").classList.add("hidden");
-//   // Add code to navigate back to the main page if needed
-// }
-
-// // Call this function to populate the summary when needed
-// // displayQuizSummary(); // Uncomment this line when you want to call it
-
+//display summary
 function displayQuizSummary() {
   document.getElementById("summary-section").classList.remove("hidden");
 
@@ -899,52 +609,114 @@ function displayQuizSummary() {
   document.getElementById("home-section").classList.add("hidden");
   document.getElementById("quiz-section").classList.add("hidden");
 
+  // users.forEach((user) => {
+  //   user.quizResults.forEach((result) => {
+  //     const row = document.createElement("tr");
+  //     let data = JSON.stringify(result);
+  //     row.innerHTML = `
+  //                 <td>${user.username}</td>
+  //                 <td>${user.email}</td>
+  //                 <td>${user.phone}</td>
+  //                 <td>${result.score}</td>
+  //                 <td>${result.submissionDay}</td>
+  //                 <td>${result.submissionTime}</td>
+  //               <td>
+  //  <button class="view-button" onclick="showModal('${
+  //    user.username
+  //  }','${JSON.stringify(result)}')">View</button>
+  //       </td>`;
+  //     summaryTableBody.appendChild(row);
+  //     console.log(`${user.username}, ${JSON.stringify(result)}`, "This");
+  //   });
+  // });
+
   users.forEach((user) => {
     user.quizResults.forEach((result) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-                  <td>${user.username}</td>
-                  <td>${user.email}</td>
-                  <td>${user.phone}</td>
-                  <td>${result.score}</td>
-                  <td>${result.submissionDay}</td>
-                  <td>${result.submissionTime}</td>
-                  <td><button class="view-button" onclick="showModal(${
-                    user.username
-                  }, ${JSON.stringify(result)})">View</button></td>
-              `;
+            <td>${user.username}</td>
+            <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td>${result.score}</td>
+            <td>${result.submissionDay}</td>
+            <td>${result.submissionTime}</td>
+            <td>
+                <button class="view-button" onclick="showModal('${user.username}')">View</button>
+            </td>`;
+      console.log(`${user.username}, ${JSON.stringify(result)}`);
       summaryTableBody.appendChild(row);
-      console.log(`${user.username}, ${JSON.stringify(result)}`, "This");
     });
   });
 }
 
-function showModal(username, result) {
+function showModal(
+  username,
+  result = {
+    score: 0,
+    correctAnswers: 0,
+    incorrectAnswers: 12,
+    submissionDate: "20/10/2024",
+    submissionTime: "22:16:16",
+    submissionDay: "Sunday",
+    questionResults: [
+      { correctAnswer: 2, userAnswer: 1, isCorrect: false },
+      { correctAnswer: 1, isCorrect: false },
+      { correctAnswer: 1, isCorrect: false },
+      { correctAnswer: 2, isCorrect: false },
+      { correctAnswer: 2, isCorrect: false },
+      { correctAnswer: 0, isCorrect: false },
+      { correctAnswer: 0, isCorrect: false },
+      { correctAnswer: 0, isCorrect: false },
+      { correctAnswer: 2, isCorrect: false },
+      { correctAnswer: 0, isCorrect: false },
+      { correctAnswer: 1, isCorrect: false },
+      { correctAnswer: 0, isCorrect: false },
+    ],
+  }
+) {
   console.log("close");
 
-  document.getElementById("modal").classList.remove("hidden");
-  console.log("close22");
   const modalBody = document.getElementById("modal-body");
+  modalBody.innerHTML = ""; // Clear existing content
+
   let content = `<h3>Quiz Results for ${username}</h3>`;
   content += `<p>Score: ${result.score}</p>`;
   content += `<p>Correct Answers: ${result.correctAnswers}</p>`;
   content += `<p>Incorrect Answers: ${result.incorrectAnswers}</p>`;
   content += `<h4>Question Results</h4>`;
-  content += `<ul>`;
+  content += `<ul style="list-style-type: none; padding: 0;">`;
 
   result.questionResults.forEach((questionResult, index) => {
-    const question = questions[index]; // Assuming questions are in the same order
-    content += `<li>${question.question}<br>`;
-    content += `Your Answer: <span class="${
-      questionResult.isCorrect ? "correct" : "incorrect"
-    }">${question.options[questionResult.userAnswer]}</span><br>`;
-    content += `Correct Answer: <span class="correct">${
-      question.options[questionResult.correctAnswer]
-    }</span></li>`;
+    const question = questions[index]; // Get the corresponding question
+    const userAnswer = questionResult.userAnswer; // User's answer
+    const correctAnswer = question.answer; // Correct answer index
+
+    // Start listing the question
+    content += `<li style="margin-bottom: 10px;">${question.question}<br>`;
+
+    // Display options and highlight the user's answer and the correct answer
+    question.options.forEach((option, optionIndex) => {
+      let optionClass = ""; // Default class
+
+      // Determine the color for the option
+      if (optionIndex === correctAnswer) {
+        optionClass = "correct"; // Correct answer
+      } else if (optionIndex === userAnswer) {
+        optionClass = "incorrect"; // User's answer (wrong)
+      }
+
+      content += `<span class="${optionClass}">${option}</span><br>`;
+    });
+
+    // Close the question entry
+    content += `</li>`;
   });
 
   content += `</ul>`;
   modalBody.innerHTML = content;
+
+  // Open the modal
+  document.getElementById("modal").classList.remove("hidden");
 }
 
 function closeModal() {
