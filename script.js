@@ -3,6 +3,7 @@ let users = JSON.parse(localStorage.getItem("users")) || [];
 let currentUser = null;
 let currentQuestionIndex = 0;
 let quizAnswers = [];
+//adding
 
 window.onload = () => {
   const storedUser = localStorage.getItem("currentUser");
