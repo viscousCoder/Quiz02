@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" id="mainContainerId">
 
 
         <div id="auth-section">
@@ -86,15 +86,15 @@
 
         <div id="summary-section" class="hidden">
             <h2>Quiz Summary</h2>
-            <table id="quiz-summary-table" class="tableClass">
+            <table id="quiz-summary-table" class="tableClass" border="1">
                 <thead>
                     <tr>
                         <th>Username</th>
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Score</th>
-                        <th>Day</th>
-                        <th>Time</th>
+                        <th>Percentage</th>
+                        <th>Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -106,9 +106,30 @@
         </div>
 
 
+        <!-- Updated All Summary Table Section -->
+        <div id="all-summary-section" class="hidden">
+            <h2>All User Summaries</h2>
+            <table id="all-summary-table" class="tableClass" border="1">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Score</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="allSummaryTableBody">
+                    <!-- Table rows will be generated dynamically -->
+                </tbody>
+            </table>
+            <button onclick="goBackToMainPage()">Back to Main</button>
+        </div>
+
+
 
         <div id="modal" class="hidden">
-            <div class="modal-content">
+            <div class="modal-content" id="modalId">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <div id="modal-body">
                 </div>

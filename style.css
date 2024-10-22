@@ -89,16 +89,27 @@ button:hover {
 }
 
 .modal-content {
-  position: fixed;
+  position: relative;
+  overflow-y: auto;
   top: 20%;
   left: 50%;
-  transform: translate(-50%, -20%);
+  transform: translate(-50%, -145%);
   background-color: #fff;
   width: 80%;
   max-width: 500px;
   z-index: 1000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+}
+.additional {
+  height: 38rem;
+  transform: translate(-50%, -39%);
+  /* height: 54rem;
+  transform: translate(-50%, -29%); */
+  overflow-y: auto;
+}
+.modalAllSum {
+  transform: translate(-50%, -51%);
 }
 
 .close {
@@ -152,7 +163,7 @@ button:hover {
 }
 
 .tableClass {
-  width: 90%;
+  width: 100%;
 }
 .MainClasstimer {
   position: fixed;
@@ -165,4 +176,13 @@ button:hover {
   font-size: 14px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000; /* Ensure it appears above other elements */
+}
+.tableContainer {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+}
+.userSummaryList {
+  text-align: left;
 }
