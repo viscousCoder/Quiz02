@@ -103,7 +103,7 @@ button:hover {
 }
 .additional {
   height: 38rem;
-  transform: translate(-50%, -39%);
+  transform: translate(-50%, -24%);
   /* height: 54rem;
   transform: translate(-50%, -29%); */
   overflow-y: auto;
