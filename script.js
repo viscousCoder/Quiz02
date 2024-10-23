@@ -469,6 +469,8 @@ function submitQuiz() {
   }
 
   showResult(score, correct, questions.length - correct);
+  // document.getElementById("modal").classList.remove("modalSubmit");
+  document.getElementById("modal").classList.add("modalSmallSubmit");
 
   // Switch from the quiz section to the home section after a short delay
   setTimeout(() => {
@@ -525,34 +527,77 @@ function showResult(score, correct, wrong) {
   document.getElementById("modal").classList.remove("hidden");
 }
 
+// function showAllSummary() {
+//   document.getElementById("mainContainerId").classList.remove("container");
+
+//   document.getElementById("mainContainerId").classList.add("tableContainer");
+
+//   const allSummaryTableBody = document.querySelector(".allSummaryTableBody");
+
+//   if (!users || users.length === 0) {
+//     allSummaryTableBody.innerHTML = `<tr><td colspan="5">No user data available</td></tr>`;
+//   } else {
+//     allSummaryTableBody.innerHTML = users
+//       .map(
+//         (user) =>
+//           `<tr>
+//                       <td>${user.username}</td>
+//                       <td>${user.email}</td>
+//                       <td>${user.phone || "N/A"}</td>
+//                       <td>${
+//                         Array.isArray(user.scores)
+//                           ? user.scores.join(", ")
+//                           : "No attempts"
+//                       }</td>
+//                       <td><button onclick="viewUserDetails('${
+//                         user.email
+//                       }')">View</button></td>
+//                   </tr>`
+//       )
+//       .join("");
+//   }
+
+//   // Hide other sections and show the All Summary section
+//   document.getElementById("home-section").classList.add("hidden");
+//   document.getElementById("quiz-section").classList.add("hidden");
+//   document.getElementById("summary-section").classList.add("hidden");
+//   document.getElementById("all-summary-section").classList.remove("hidden");
+// }
+
 function showAllSummary() {
   document.getElementById("mainContainerId").classList.remove("container");
-
   document.getElementById("mainContainerId").classList.add("tableContainer");
 
   const allSummaryTableBody = document.querySelector(".allSummaryTableBody");
+  allSummaryTableBody.innerHTML = ""; // Clear previous content
 
   if (!users || users.length === 0) {
-    allSummaryTableBody.innerHTML = `<tr><td colspan="5">No user data available</td></tr>`;
+    allSummaryTableBody.innerHTML = `<tr><td colspan="7">No user data available</td></tr>`;
   } else {
-    allSummaryTableBody.innerHTML = users
-      .map(
-        (user) =>
-          `<tr>
-                      <td>${user.username}</td>
-                      <td>${user.email}</td>
-                      <td>${user.phone || "N/A"}</td>
-                      <td>${
-                        Array.isArray(user.scores)
-                          ? user.scores.join(", ")
-                          : "No attempts"
-                      }</td>
-                      <td><button onclick="viewUserDetails('${
-                        user.email
-                      }')">View</button></td>
-                  </tr>`
-      )
-      .join("");
+    users.forEach((user) => {
+      if (user.quizResults && user.quizResults.length > 0) {
+        user.quizResults.forEach((result, quizIndex) => {
+          const percentage = ((result.score / questions.length) * 100).toFixed(
+            0
+          );
+          const row = `
+            <tr>
+              <td>${user.username}</td>
+              <td>${user.email}</td>
+              <td>${user.phone || "N/A"}</td>
+              <td>${result.score}</td>
+              <td>${percentage}%</td>
+              <td>${result.submissionDate}</td>
+              <td><button onclick="showModal(${users.indexOf(
+                user
+              )}, ${quizIndex})">View</button></td>
+            </tr>`;
+          allSummaryTableBody.innerHTML += row;
+        });
+      } else {
+        allSummaryTableBody.innerHTML += `<tr><td colspan="7">${user.username} has no quiz attempts</td></tr>`;
+      }
+    });
   }
 
   // Hide other sections and show the All Summary section
@@ -562,30 +607,78 @@ function showAllSummary() {
   document.getElementById("all-summary-section").classList.remove("hidden");
 }
 
-function viewUserDetails(email) {
-  document.getElementById("modalId").classList.add("modalAllSum");
-  const user = users.find((u) => u.email === email);
-  if (user) {
-    const modalBody = document.getElementById("modal-body");
-    modalBody.innerHTML = `
-          <h3>User Details</h3>
-          <p><strong>Username:</strong> ${user.username}</p>
-          <p><strong>Email:</strong> ${user.email}</p>
-          <p><strong>Phone Number:</strong> ${user.phone || "N/A"}</p>
-          <p><strong>Highest Score:</strong> ${
-            Array.isArray(user.scores) && user.scores.length > 0
-              ? Math.max(...user.scores)
-              : "No attempts"
-          }</p>
-          <p><strong>All Scores:</strong> ${
-            Array.isArray(user.scores) ? user.scores.join(", ") : "No attempts"
-          }</p>
-      `;
-    document.getElementById("modal").classList.remove("hidden");
-  }
-}
+// function showModal(userIndex, quizIndex) {
+//   document.querySelector("#modalId").classList.add("additional");
+//   const users = JSON.parse(localStorage.getItem("users")) || [];
+//   const user = users[userIndex];
+//   const quizResult = user.quizResults[quizIndex];
+
+//   if (!quizResult) {
+//     alert("Quiz details not found.");
+//     return;
+//   }
+
+//   // Modal content
+//   let modalContent = `<h3>Quiz Summary for ${user.username}</h3>`;
+//   modalContent += `<p><strong>Score:</strong> ${quizResult.score}</p>`;
+//   modalContent += `<p><strong>Date:</strong> ${quizResult.submissionDate}</p>`;
+//   modalContent += `<p><strong>Correct Answers:</strong> ${quizResult.correctAnswers}</p>`;
+//   modalContent += `<p><strong>Incorrect Answers:</strong> ${quizResult.incorrectAnswers}</p>`;
+//   modalContent += `<ul class="userSummaryList">`;
+
+//   quizResult.questionResults?.forEach((questionResult, index) => {
+//     const question = questions[index];
+//     modalContent += `<li>
+//         <p><strong>Question ${index + 1}:</strong> ${question.question}</p>
+//         <ul>`;
+
+//     question.options.forEach((option, optionIndex) => {
+//       let optionClass = "";
+//       if (optionIndex === questionResult.correctAnswer) {
+//         optionClass = "correct";
+//       }
+//       if (questionResult.userAnswer !== undefined && optionIndex === questionResult.userAnswer && optionIndex !== questionResult.correctAnswer) {
+//         optionClass = "incorrect";
+//       }
+//       modalContent += `<li class="${optionClass}">${optionIndex + 1}. ${option}</li>`;
+//     });
+
+//     const resultClass = questionResult.isCorrect ? "correct" : "incorrect";
+//     modalContent += `</ul>
+//         <p class="${resultClass}"><strong>${questionResult.isCorrect ? "Correct" : "Incorrect"}</strong></p>
+//       </li>`;
+//   });
+
+//   modalContent += `</ul>`;
+//   document.getElementById("modal-body").innerHTML = modalContent;
+//   document.getElementById("modal").classList.remove("hidden");
+// }
+
+// function viewUserDetails(email) {
+//   document.getElementById("modalId").classList.add("modalAllSum");
+//   const user = users.find((u) => u.email === email);
+//   if (user) {
+//     const modalBody = document.getElementById("modal-body");
+//     modalBody.innerHTML = `
+//           <h3>User Details</h3>
+//           <p><strong>Username:</strong> ${user.username}</p>
+//           <p><strong>Email:</strong> ${user.email}</p>
+//           <p><strong>Phone Number:</strong> ${user.phone || "N/A"}</p>
+//           <p><strong>Highest Score:</strong> ${
+//             Array.isArray(user.scores) && user.scores.length > 0
+//               ? Math.max(...user.scores)
+//               : "No attempts"
+//           }</p>
+//           <p><strong>All Scores:</strong> ${
+//             Array.isArray(user.scores) ? user.scores.join(", ") : "No attempts"
+//           }</p>
+//       `;
+//     document.getElementById("modal").classList.remove("hidden");
+//   }
+// }
 
 // Function to go back to the main page
+
 function goBackToMainPage() {
   document.getElementById("all-summary-section").classList.add("hidden");
   document.getElementById("home-section").classList.remove("hidden");
@@ -752,6 +845,7 @@ function closeModal() {
   document.getElementById("modal").classList.add("hidden");
   document.querySelector("#modalId").classList.remove("additional");
   document.getElementById("modalId").classList.remove("modalAllSum");
+  document.getElementById("modal").classList.remove("modalSmallSubmit");
 }
 
 function goBackToMainPage() {

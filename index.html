@@ -107,7 +107,7 @@
 
 
         <!-- Updated All Summary Table Section -->
-        <div id="all-summary-section" class="hidden">
+        <!-- <div id="all-summary-section" class="hidden">
             <h2>All User Summaries</h2>
             <table id="all-summary-table" class="tableClass" border="1">
                 <thead>
@@ -120,6 +120,26 @@
                     </tr>
                 </thead>
                 <tbody class="allSummaryTableBody">
+                </tbody>
+            </table>
+            <button onclick="goBackToMainPage()">Back to Main</button>
+        </div> -->
+
+        <div id="all-summary-section" class="hidden">
+            <h2>All User Summaries</h2>
+            <table id="all-summary-table" class="tableClass" border="1">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="allSummaryTableBody">
                     <!-- Table rows will be generated dynamically -->
                 </tbody>
             </table>
@@ -127,8 +147,7 @@
         </div>
 
 
-
-        <div id="modal" class="hidden">
+        <div id="modal" class="hidden modalSubmit">
             <div class="modal-content" id="modalId">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <div id="modal-body">

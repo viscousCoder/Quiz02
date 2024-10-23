@@ -65,6 +65,7 @@ button {
   cursor: pointer;
   border-radius: 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 button:hover {
@@ -87,27 +88,40 @@ button:hover {
 #options div:hover {
   background-color: #e0e0e0;
 }
+.modalSubmit {
+  background-color: #bebebe;
+  position: absolute;
+  top: 5%;
+  left: 29%;
+  height: 84%;
+  border-radius: 20px;
+}
+.modalSmallSubmit {
+  width: 43%;
+  height: 18%;
+  top: 8%;
+}
 
 .modal-content {
-  position: relative;
+  /* position: relative; */
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -145%);
+  /* top: 20%;
+  left: 50%; */
+  /* transform: translate(-50%, -145%); */
   background-color: #fff;
-  width: 80%;
+  /* width: 80%; */
   max-width: 500px;
   z-index: 1000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
-.additional {
+/* .additional {
   height: 38rem;
   transform: translate(-50%, -24%);
-  /* height: 54rem;
-  transform: translate(-50%, -29%); */
   overflow-y: auto;
-}
+} */
 .modalAllSum {
   transform: translate(-50%, -51%);
 }
