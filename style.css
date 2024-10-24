@@ -97,9 +97,10 @@ button:hover {
   border-radius: 20px;
 }
 .modalSmallSubmit {
-  width: 43%;
+  width: 30%;
   height: 18%;
-  top: 8%;
+  top: 18%;
+  left: auto;
 }
 
 .modal-content {
